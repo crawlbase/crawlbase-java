@@ -47,8 +47,8 @@ public class API
     private String url;
 
     /**
-     * @param token
      * Accepts a Normal token or Javascript token
+     * @param token This is your authentication token. You have two tokens; one for normal requests and another one for JavaScript requests.
      * @see <a href="https://crawlbase.com/docs/crawling-api/parameters/#token">token documentation</a>
      * @see <a href="https://crawlbase.com/login">Crawlbase site for your token</a>
      */
@@ -60,6 +60,7 @@ public class API
     }
 
     /**
+     * Return the token used in the request
      * @return Authentication token
      */
     public String getToken() {
@@ -67,6 +68,7 @@ public class API
     }
 
     /**
+     * Return the response body
      * @return JSON string or the html string of the page depending on the option you selected with the format parameter (default is html).
      * @see <a href="https://crawlbase.com/docs/crawling-api/response/#body">body documentation</a>
      */
@@ -75,6 +77,7 @@ public class API
     }
 
     /**
+     * Return the response status code
      * @return Http code response for the request.
      */
     public int getStatusCode() {
@@ -82,6 +85,7 @@ public class API
     }
 
     /**
+     * Return the original status code
      * @return The status response that we (Crawlbase) receive when crawling the url sent in the request.
      * @see <a href="https://crawlbase.com/docs/crawling-api/response/#original-status">original status documentation</a>
      */
@@ -90,6 +94,7 @@ public class API
     }
 
     /**
+     * Return the crawlbase status code
      * @return The Crawlbase (pc) status code can be any status code and it's the code that ends up being valid.
      * @see <a href="https://crawlbase.com/docs/crawling-api/response/#pc-status">pc status documentation</a>
      */
@@ -98,6 +103,7 @@ public class API
     }
 
     /**
+     * Return the original URL
      * @return The original url that was sent in the request or the url of the redirect that Crawlbase followed.
      * @see <a href="https://crawlbase.com/docs/crawling-api/response/#url">url documentation</a>
      */
@@ -108,11 +114,10 @@ public class API
     /**
      * Makes a GET request to the Crawling API.
      * 
-     * @param url
-     * This parameter is required for all calls
+     * @param url This parameter is required for all calls
      * @see <a href="https://crawlbase.com/docs/crawling-api/parameters/#url">url documentation</a>
      * 
-     * @param options
+     * @param options Those are the api parameters
      * @see <a href="https://crawlbase.com/docs/crawling-api/parameters">parameters documentation</a>
      */
     public void get(String url, Map<String, Object> options) {
@@ -141,7 +146,8 @@ public class API
     }
 
     /**
-     * @see API#get(String, MapString, Object>) get
+     * Execute a get request
+     * @param url This parameter is required for all calls
      */
     public void get(String url) {
         get(url, null);
@@ -150,14 +156,12 @@ public class API
     /**
      * Makes a POST request to the Crawling API.
      * 
-     * @param url
-     * This parameter is required for all calls
+     * @param url This parameter is required for all calls
      * @see <a href="https://crawlbase.com/docs/crawling-api/parameters/#url">url documentation</a>
      * 
-     * @param data
-     * The data that you want to send via POST
+     * @param data The data that you want to send via POST
      * 
-     * @param options
+     * @param options Those are the api parameters
      * @see <a href="https://crawlbase.com/docs/crawling-api/parameters">parameters documentation</a>
      */
     public void post(String url, Map<String, Object> data, Map<String, Object> options) {
@@ -189,7 +193,12 @@ public class API
     }
 
     /**
-     * @see API#post(String, MapString, Object>, MapString, Object>) post
+     * Makes a POST request to the Crawling API.
+     *
+     * @param url This parameter is required for all calls
+     * @see <a href="https://crawlbase.com/docs/crawling-api/parameters/#url">url documentation</a>
+     *
+     * @param data The data that you want to send via POST
      */
     public void post(String url, Map<String, Object> data) {
         post(url, data, null);
