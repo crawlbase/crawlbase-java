@@ -245,7 +245,13 @@ public class API
         if (format == FORMAT_JSON) {
             Map<String, String> map = getResponseBodyAsMap(httpConn);
             try { extractHeaderFromMap(map); } catch (Exception e) {}
-            this.body = map.get("body").toString();
+            if (map.containsKey("body")) {
+                this.body = map.get("body").toString();
+            } else if (map.size() == 1 && map.containsKey("rid")) {
+                this.body = map.get("rid").toString();
+            } else {
+                this.body = new ObjectMapper().writeValueAsString(map);
+            }
         } else {
             try { extractHeaderFromResponse(httpConn); } catch (Exception e) {}
             this.body = getResponseBody(httpConn);
