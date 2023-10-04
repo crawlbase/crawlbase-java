@@ -6,7 +6,7 @@
 
   <groupId>com.crawlbase</groupId>
   <artifactId>crawlbase-java-sdk-pom</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
 
   <name>Crawlbase SDK for Java</name>
   <description>Java library for scraping and crawling websites using the Crawlbase API.</description>
