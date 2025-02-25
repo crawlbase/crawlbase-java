@@ -208,5 +208,5 @@ Everyone interacting in the Crawlbase project’s codebases, issue trackers, cha
 
 ---
 
-Copyright 2024 Crawlbase
+Copyright 2025 Crawlbase
 
