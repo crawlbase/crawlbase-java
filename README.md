@@ -165,7 +165,7 @@ If you have questions or need help using the library, please open an issue or [c
 
 ## Screenshots API usage
 
-> ⚠️ **Deprecated.** The standalone Screenshots API has been closed to new sign-ups since November 1, 2024. Existing integrations continue to work and no shutdown is scheduled, but new code should use the Crawling API with the `screenshot=true` parameter — same JS-rendering pipeline, screenshot parameters on the standard endpoint. The class below stays available for backward compatibility. See the [Crawling API screenshots section](https://crawlbase.com/docs/crawling-api#screenshots).
+> ⚠️ **Deprecated.** The standalone Screenshots API has been closed to new sign-ups since November 1, 2024. Existing integrations continue to work and no shutdown is scheduled, but new code should use the Crawling API with the `screenshot=true` parameter — same JS-rendering pipeline, screenshot parameters on the standard endpoint. The class below stays available for backward compatibility. See the [Crawling API documentation](https://crawlbase.com/docs/crawling-api).
 
 Initialize with your Screenshots API token and call the `get` method.
 
@@ -210,7 +210,7 @@ conn.setRequestProperty("Proxy-Authorization", "Basic " + auth);
 System.out.println(new String(conn.getInputStream().readAllBytes(), StandardCharsets.UTF_8));
 ```
 
-Note: the proxy re-signs HTTPS traffic, so certificate verification must be disabled on the client (as in the example). See the [Smart AI Proxy documentation](https://crawlbase.com/docs/smart-proxy) for all options.
+Note: the example uses a plain-HTTP target for simplicity. For `https://` targets the proxy re-signs the traffic, so certificate verification must be disabled on the client, and `HttpURLConnection` additionally requires allowing Basic proxy authentication for tunnels (`-Djdk.http.auth.tunneling.disabledSchemes=""`). See the [Smart AI Proxy documentation](https://crawlbase.com/docs/smart-proxy) for all options.
 
 If you have questions or need help using the library, please open an issue or [contact us](https://crawlbase.com/contact).
 
