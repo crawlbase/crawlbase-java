@@ -125,6 +125,8 @@ System.out.println(api.getCrawlbaseStatus());
 
 ## Scraper API usage
 
+> ⚠️ **Deprecated.** The standalone Scraper API has been closed to new sign-ups since October 1, 2024. Existing integrations continue to work and no shutdown is scheduled, but new code should use the Crawling API with the `scraper` parameter instead (same scrapers, simpler endpoint, more parameters). The class below stays available for backward compatibility. See the [scrapers documentation](https://crawlbase.com/docs/scrapers).
+
 Initialize the Scraper API using your normal token and call the `get` method.
 
 ```java
@@ -147,6 +149,8 @@ System.out.println(scraperApi.getBody());
 
 ## Leads API usage
 
+> ⚠️ **Deprecated.** The Leads API has been closed to new sign-ups since October 1, 2024. Existing integrations continue to work and no shutdown is scheduled. There is no direct replacement; for similar workflows use the Crawling API with the [`email-extractor`](https://crawlbase.com/docs/scrapers/email-extractor) scraper (any URL → emails) or the [`google-serp`](https://crawlbase.com/docs/scrapers/google-serp) scraper for domain-scoped contact discovery. The class below stays available for backward compatibility.
+
 Initialize with your Leads API token and call the `get` method.
 
 ```java
@@ -160,6 +164,8 @@ System.out.println(leadsApi.getBody());
 If you have questions or need help using the library, please open an issue or [contact us](https://crawlbase.com/contact).
 
 ## Screenshots API usage
+
+> ⚠️ **Deprecated.** The standalone Screenshots API has been closed to new sign-ups since November 1, 2024. Existing integrations continue to work and no shutdown is scheduled, but new code should use the Crawling API with the `screenshot=true` parameter — same JS-rendering pipeline, screenshot parameters on the standard endpoint. The class below stays available for backward compatibility. See the [Crawling API screenshots section](https://crawlbase.com/docs/crawling-api#screenshots).
 
 Initialize with your Screenshots API token and call the `get` method.
 
@@ -191,6 +197,20 @@ If you want to convert the body to bytes then you have to do the following:
 ```java
 byte[] data = Base64.getDecoder().decode(screenshotsApi.getBody());
 ```
+
+## Smart AI Proxy usage
+
+The [Smart AI Proxy](https://crawlbase.com/docs/smart-proxy) is a standard rotating HTTP(S) proxy endpoint, so it needs no SDK: point any HTTP client at `smartproxy.crawlbase.com:8012` (HTTP) or `smartproxy.crawlbase.com:8013` (HTTPS) with your token as the proxy username and an empty password. Crawlbase handles proxy rotation, retries and anti-bot bypass on its side.
+
+```java
+Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("smartproxy.crawlbase.com", 8012));
+HttpURLConnection conn = (HttpURLConnection) new URL("http://httpbin.org/ip").openConnection(proxy);
+String auth = Base64.getEncoder().encodeToString("YOUR_TOKEN:".getBytes(StandardCharsets.UTF_8));
+conn.setRequestProperty("Proxy-Authorization", "Basic " + auth);
+System.out.println(new String(conn.getInputStream().readAllBytes(), StandardCharsets.UTF_8));
+```
+
+Note: the proxy re-signs HTTPS traffic, so certificate verification must be disabled on the client (as in the example). See the [Smart AI Proxy documentation](https://crawlbase.com/docs/smart-proxy) for all options.
 
 If you have questions or need help using the library, please open an issue or [contact us](https://crawlbase.com/contact).
 
