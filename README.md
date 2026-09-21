@@ -35,7 +35,7 @@ Example:
 api.get("https://www.facebook.com/britneyspears");
 System.out.println(api.getStatusCode());
 System.out.println(api.getOriginalStatus());
-System.out.println(api.getCrawlbaseStatus());
+System.out.println(api.getCbStatus());
 System.out.println(api.getBody());
 ```
 
@@ -120,8 +120,10 @@ You can always get the original status and crawlbase status from the response. R
 api.get("https://sfbay.craigslist.org/");
 
 System.out.println(api.getOriginalStatus());
-System.out.println(api.getCrawlbaseStatus());
+System.out.println(api.getCbStatus());
 ```
+
+`getCbStatus()` returns the Crawlbase status resolved from the `cb_status` response header (or JSON field when `format` is `json`). Responses that still send the legacy `pc_status` name are handled transparently: `pc_status` is used only when `cb_status` is absent. `getCrawlbaseStatus()` returns the same value; `getPcStatus()` is kept as a deprecated alias and will be removed in a future major release.
 
 ## Scraper API usage
 
