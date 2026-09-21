@@ -94,11 +94,33 @@ public class API
     }
 
     /**
-     * Return the crawlbase status code
-     * @return The Crawlbase (pc) status code can be any status code and it's the code that ends up being valid.
-     * @see <a href="https://crawlbase.com/docs/crawling-api/response/#pc-status">pc status documentation</a>
+     * Return the Crawlbase status code.
+     * Resolved from the {@code cb_status} response header / JSON field, falling back to the
+     * deprecated {@code pc_status} when {@code cb_status} is absent.
+     * @return The Crawlbase status code can be any status code and it's the code that ends up being valid.
+     * @see <a href="https://crawlbase.com/docs/crawling-api/response/#cb-status">cb status documentation</a>
+     */
+    public String getCbStatus() {
+        return crawlbaseStatus;
+    }
+
+    /**
+     * Return the Crawlbase status code. Same value as {@link #getCbStatus()}.
+     * @return The Crawlbase status code can be any status code and it's the code that ends up being valid.
+     * @see #getCbStatus()
      */
     public String getCrawlbaseStatus() {
+        return crawlbaseStatus;
+    }
+
+    /**
+     * Return the Crawlbase status code. Same value as {@link #getCbStatus()}.
+     * @return The Crawlbase status code.
+     * @deprecated {@code pc_status} is deprecated and will be removed in a future major release;
+     *             use {@link #getCbStatus()} instead.
+     */
+    @Deprecated
+    public String getPcStatus() {
         return crawlbaseStatus;
     }
 
@@ -260,13 +282,15 @@ public class API
 
     protected void extractHeaderFromMap(Map<String, String> map) {
         this.originalStatus = map.get("original_status");
-        this.crawlbaseStatus = map.containsKey("cb_status") ? map.get("cb_status") : map.get("pc_status");
+        this.crawlbaseStatus = StatusResolution.resolve(map);
         this.url = map.get("url");
     }
 
     protected void extractHeaderFromResponse(HttpURLConnection httpConn) {
         this.originalStatus = httpConn.getHeaderField("original_status");
-        this.crawlbaseStatus = (null == httpConn.getHeaderField("cb_status")) ? httpConn.getHeaderField("pc_status") : httpConn.getHeaderField("cb_status");
+        this.crawlbaseStatus = StatusResolution.resolve(
+            httpConn.getHeaderField(StatusResolution.CB_STATUS),
+            httpConn.getHeaderField(StatusResolution.PC_STATUS));
         this.url = httpConn.getHeaderField("url");
     }
 
